@@ -8,7 +8,7 @@ def check_prime(num):
 
     return 0
 
-def valucaion(num, div):
+def valuacion(num, div):
     i = 0
 
     if div == 1:
@@ -27,7 +27,7 @@ def get_divisors(num):
     while num != 1:
         if (not check_prime(i)) and num % i == 0:
             divisors.append(i)
-            num = int(num / (i ** valucaion(num, i)))
+            num = int(num / (i ** valuacion(num, i)))
         i += 1
     
     return divisors
@@ -39,7 +39,7 @@ def get_div_cardinal(num):
     div_cardinal = 1
 
     for divisor in divisores:
-        factores.append(valucaion(num, divisor) + 1)
+        factores.append(valuacion(num, divisor) + 1)
 
     for factor in factores:
         div_cardinal *= factor
