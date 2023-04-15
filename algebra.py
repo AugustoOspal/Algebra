@@ -1,5 +1,16 @@
 import math
 
+def factorial(num):
+    if num == 1 or num == 0:
+        return 1
+    
+    elif num > 1:
+        return num * factorial(num - 1)
+
+    # En caso de error devuelve 0 como unico codigo de error
+    print("El numero ingresado tiene que ser positivo")
+    return 0 
+
 def check_prime(num):
     if num > 1:
         for i in range (2, int((num/2) + 1)):
