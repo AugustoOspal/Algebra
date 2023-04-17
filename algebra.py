@@ -32,7 +32,13 @@ def valuacion(num, div):
     return i
 
 def get_divisors(num):
+    #flag para negativos
+    negative = False
     divisors = []
+
+    if num < 0:
+        negative = True
+        num = abs(num)
 
     i = 1
     while num != 1:
@@ -40,6 +46,13 @@ def get_divisors(num):
             divisors.append(i)
             num = int(num / (i ** valuacion(num, i)))
         i += 1
+
+    if negative:
+
+        divisores_originales = divisors.copy()
+
+        for divisor in divisores_originales:
+            divisors.append(-divisor)
     
     return divisors
 
