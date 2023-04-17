@@ -31,14 +31,11 @@ def valuacion(num, div):
         
     return i
 
-def get_divisors(num):
+def get_divisors(num, negativos=True):
     #flag para negativos
-    negative = False
     divisors = []
 
-    if num < 0:
-        negative = True
-        num = abs(num)
+    num = abs(num)
 
     i = 1
     while num != 1:
@@ -47,8 +44,7 @@ def get_divisors(num):
             num = int(num / (i ** valuacion(num, i)))
         i += 1
 
-    if negative:
-
+    if negativos:
         divisores_originales = divisors.copy()
 
         for divisor in divisores_originales:
@@ -82,3 +78,19 @@ def get_SEGCD(num, mcd, numPositiveDivisors):
         if (math.gcd(num, i) == mcd) and get_div_cardinal(i) == numPositiveDivisors:
             return i
         i += 1
+
+def get_primes(num):
+    # Agarra los num primeros primos en orden
+    i = 1
+    cont = 0
+
+    primes = []
+
+    while cont < num:
+        if not check_prime(i):
+            primes.append(i)
+            cont += 1
+
+        i += 1
+
+    return primes
