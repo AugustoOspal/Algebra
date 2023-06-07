@@ -1,0 +1,2 @@
+chequear funcion get_mcd
+No me gusta muco como quedo get_multiplicidad. Cambiar

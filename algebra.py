@@ -15,9 +15,9 @@ def check_prime(num):
     if num > 1:
         for i in range (2, int((num/2) + 1)):
             if num % i == 0:
-                return 1
+                return 0
 
-    return 0
+    return 1
 
 def valuacion(num, div):
     i = 0
@@ -31,7 +31,7 @@ def valuacion(num, div):
         
     return i
 
-def get_divisors(num, negativos=True):
+def get_divisors(num, negativos=True, uno=True):
     #flag para negativos
     divisors = []
 
@@ -39,7 +39,7 @@ def get_divisors(num, negativos=True):
 
     i = 1
     while num != 1:
-        if (not check_prime(i)) and num % i == 0:
+        if (check_prime(i)) and num % i == 0:
             divisors.append(i)
             num = int(num / (i ** valuacion(num, i)))
         i += 1
@@ -53,6 +53,7 @@ def get_divisors(num, negativos=True):
     return divisors
 
 def get_div_cardinal(num):
+    """Un unico input. Pones el numero y te pone las valuaciones de sus factores"""
     factores = []
     divisores = get_divisors(num)
     divisores.remove(1)
@@ -66,31 +67,75 @@ def get_div_cardinal(num):
 
     return div_cardinal
 
-def get_SEGCD(num, mcd, numPositiveDivisors):
-    # Si se tiene el siguiente problema: El mcd entre 252 y n perteneciente a Z
-    # es igual a 21. Averiguar el n mas chico posible si se sabe que n tiene
-    # 24 divisores positivos.
+def get_segcd(num, mcd, num_positive_divisor):
+    """Si se tiene el siguiente problema: El mcd entre 252 y n perteneciente a Z
+    es igual a 21. Averiguar el n mas chico posible si se sabe que n tiene
+    24 divisores positivos."""
 
     #SEMCD es de Smallest Equivalent Greatest Common Divisor
 
     i = 1
     while True:
-        if (math.gcd(num, i) == mcd) and get_div_cardinal(i) == numPositiveDivisors:
+        if (math.gcd(num, i) == mcd) and get_div_cardinal(i) == num_positive_divisor:
             return i
         i += 1
 
 def get_primes(num):
-    # Agarra los num primeros primos en orden
+    """Agarra los num primeros primos en orden"""
     i = 1
     cont = 0
 
     primes = []
 
     while cont < num:
-        if not check_prime(i):
+        if check_prime(i):
             primes.append(i)
             cont += 1
 
         i += 1
 
     return primes
+
+def get_multiplicidad(num, div):
+    contador = 1
+
+    if (div == 1):
+        return 1
+
+    while True:
+        if (num % pow(div, contador) != 0):
+            return contador - 1
+        contador += 1
+            
+def get_mcd(numbers):
+    """Finds the gcd beetween multimple numbers"""
+
+    mcd = {}
+    divisors = {}
+
+    for num in numbers:
+        divisors[num] = get_sigma(num)
+
+    # Puedo chequearlo de cualquir numero, porque tiene que estar en todos
+    for num in divisors:
+        for div in divisors[num]:
+            mcd[div] = min(divisors[numbers[1]][div], divisors[num][div])
+            #falla esto probablemente por el [0][div]
+
+    counter = 0
+    for div in mcd:
+        counter += mcd[div] * div
+
+    return counter
+
+
+def get_sigma(number):
+    """Finds the divisors and the multiplicity. Returns a diccionary"""
+
+    sigma = {}
+
+    divisors = get_divisors(number, negativos=False)
+    for div in divisors:
+        sigma[div] = get_multiplicidad(number, div)
+
+    return sigma
