@@ -128,7 +128,6 @@ def get_mcd(numbers):
 
     return counter
 
-
 def get_sigma(number):
     """Finds the divisors and the multiplicity. Returns a diccionary"""
 
@@ -139,3 +138,53 @@ def get_sigma(number):
         sigma[div] = get_multiplicidad(number, div)
 
     return sigma
+
+# def get_polinomio(cordenate):
+#     """Imprime el polinomio"""
+
+#     if (type(cordenate) != dict):
+#         return 2
+
+#     for i in cordenate:
+#         print(f"{cordenate[i]} ", end="")
+
+#         for j in cordenate:
+#             if (j == i):
+#                 print(f"x / ({j} - )", end=" ")
+#                 break
+
+#             if (j > 0):
+#                 print(f"((x - {j}) / ({j + 1} + {j}))", end=" ") 
+#                 break
+
+#             print(f"((x + {j}) / ({{j} - }))", end=" ")
+
+#         print("+", end=" ")
+
+def inverso_multiplicativo(num, modulo):
+    """Solamente funciona si (num:modulo)|al otro numero de la congruencia"""
+    i = 1
+    while ((num * i) % modulo != 1):
+        i += 1
+    return i
+
+def ask_matriz_chino():
+    """Tiene que ser en orden aX=b(mod)"""
+    matriz = []
+    numero_ecuaciones = int(input("Numero de ecuaciones: "))
+    print("Forma: AX=B(MOD")
+    for _ in range(numero_ecuaciones):
+        a = int(input("\nA: "))
+        b = int(input("B: "))
+        mod = int(input("Mod: "))
+
+        # Tendria que hacer algo para que si mcd != 1 lo arregle
+        ecuacion = [a, b, mod]
+        matriz.append(ecuacion)
+
+    return matriz
+
+# def resto_chino(matriz):
+#     """La matriz nx3 siendo n el numero de ecuaciones"""
+
+#     #Primero quiero ver si hay alguna ecuacion repetida, si hay la borro
