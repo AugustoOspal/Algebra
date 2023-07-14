@@ -1,6 +1,7 @@
 import math
 import random
 
+
 def factorial(num):
     if num == 1 or num == 0:
         return 1
@@ -149,6 +150,7 @@ def get_sigma(number):
 
     return sigma
 
+
 def inverso_multiplicativo(num, modulo):
     """Solamente funciona si (num:modulo)|al otro numero de la congruencia"""
     i = 1
@@ -173,10 +175,11 @@ def ask_matriz_chino():
 
     return matriz
 
+
 def signo(num):
     if num > 0:
         return "+"
-    else:   
+    else:
         return "-"
 
 
@@ -184,6 +187,7 @@ def signo(num):
 #     """La matriz nx3 siendo n el numero de ecuaciones"""
 
 #     #Primero quiero ver si hay alguna ecuacion repetida, si hay la borroas
+
 
 class Polinomio:
     """Crea una clase de polinomios para representar los coeficientes de cada termino y poder operar con ellos.
@@ -194,7 +198,7 @@ class Polinomio:
     Para obtener el polinomio se usa el metodo get_pol que utiliza un diccionario de la forma {grado: coeficiente}
     Los polinomios se pueden sumar, restar, multiplicar, dividir y derivar.
     Para sumar, restar y multiplicar se usan los metodos sumar, restar y multiplicar respectivamente.
-    Para dividir se usa el metodo dividir, y para obtener el resto se usa el metodo resto.
+    Para dividir se usa el metodo dividir, y devuelve el cociente y el resto.
     Para derivar se usa el metodo derivar.
     Para evaluar el polinomio en un valor se usa el metodo eval
     Para imprimir el polinomio se usa el metodo print_pol
@@ -203,21 +207,23 @@ class Polinomio:
     El metodo gen_pol genera un polinomio de grado minimo usando el polinomio interpolador de Lagrange.
     tomando como argumento una lista de puntos de la forma (x, y)"""
 
-    def __init__(self, coeficientes={}):
+    def __init__(self, coeficientes={0:0}):
         self.coeficientes = coeficientes
 
     def get_pol(self, diccionario):
+
         if type(diccionario) != dict:
             raise TypeError("El argumento debe ser un diccionario")
-        
+
         for key in diccionario:
             if type(key) != int:
                 raise TypeError("Las claves del diccionario deben ser enteros")
-            
+
             self.coeficientes[key] = diccionario[key]
-        
+
     def random_pol(self, grado, minimo, maximo):
         """Genera un polinomio aleatorio de grado grado con coeficientes entre minimo y maximo"""
+        self.clear_pol()
         for i in range(grado + 1):
             self.coeficientes[i] = random.randint(minimo, maximo)
 
@@ -236,39 +242,36 @@ class Polinomio:
     def isMonico(self):
         if len(self.coeficientes) == 1:
             return True
+        
+    def grado(self):
+        return max(self.coeficientes.keys())
 
     def print_pol(self):
         if self.coeficientes == {}:
             print("0")
             return
-        
-        if self.isMonico():
-            print(str(self.coeficientes[0]))
-            return
 
         pol = ""
-        grado_minimo = min(self.coeficientes.keys())
         grado_maximo = max(self.coeficientes.keys())
+        grado_minimo = min(self.coeficientes.keys())
 
-        #Por ahora que los imprima solamente si estan ordenados, porque sino habria que cambiar
-        #que se no se imprima el signo solamente si el es el coeficiente principal
+        # Por ahora que los imprima solamente si estan ordenados, porque sino habria que cambiar
+        # que se no se imprima el signo solamente si el es el coeficiente principal
         self.sort_pol()
 
+        # No me gusta mucho como quedo esto, ver si se puede mejorar
         for key in self.coeficientes:
             if self.coeficientes[key] == 0:
                 continue
 
-            if key == grado_maximo and self.coeficientes[key] != 1:
+            elif key == grado_maximo and abs(self.coeficientes[key]) != 1:
                 pol += str(self.coeficientes[key])
-            
-            #Areglar esta parte
-            else:
-                if abs(self.coeficientes[key]) == 1:
-                    pol += signo(self.coeficientes[key])
 
-                else:
-                    pol += f" {signo(self.coeficientes[key])} {str(abs(self.coeficientes[key]))}"
+            elif key == grado_maximo and self.coeficientes[key] == -1:
+                pol += "-"
 
+            elif self.coeficientes[key] != 1 or key == grado_minimo:
+                pol += signo(self.coeficientes[key]) + str(abs(self.coeficientes[key]))
 
             if key > 1:
                 pol += f"x^{str(key)}"
@@ -286,3 +289,32 @@ class Polinomio:
                 self.coeficientes[key] += pol.coeficientes[key]
             else:
                 self.coeficientes[key] = pol.coeficientes[key]
+
+    def restar(self, pol):
+        if type(pol) != Polinomio:
+            raise TypeError("El argumento debe ser un polinomio")
+
+        for key in pol.coeficientes:
+            if key in self.coeficientes:
+                self.coeficientes[key] -= pol.coeficientes[key]
+            else:
+                self.coeficientes[key] = -pol.coeficientes[key]
+
+    def multiplicar(self, pol):
+        if type(pol) != Polinomio and not str(pol).isnumeric():
+            raise TypeError("El argumento debe ser un polinomio")
+
+        new_pol = Polinomio()
+        new_pol.clear_pol()
+
+        if type(pol) != Polinomio:
+            pol = Polinomio({0: pol})
+
+        for key in pol.coeficientes:
+            for key2 in self.coeficientes:
+                if key + key2 in new_pol.coeficientes:
+                    new_pol.coeficientes[key + key2] += pol.coeficientes[key] * self.coeficientes[key2]
+                else:
+                    new_pol.coeficientes[key + key2] = pol.coeficientes[key] * self.coeficientes[key2]
+
+        self.coeficientes = new_pol.coeficientes

@@ -1,2 +1,6 @@
-chequear funcion get_mcd
-No me gusta muco como quedo get_multiplicidad. Cambiar
+Crear una unidad de testeo
+Emprolijar la clase de polinomios
+Cambiar la estructura para que admita dos terminos de igual grado (chequear si es asi la def de polinomios)
+Crear un metodo que sume los terminos de igual grado de un mismo polinomio
+Crear un metodo para dividir
+Crear un metodo para crear un polinomio de Lagrange
