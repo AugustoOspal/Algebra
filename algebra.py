@@ -202,7 +202,7 @@ class Polinomio:
     Para obtener el coeficiente de un termino se usa el metodo coef, con el grado del termino como argumento.
     El metodo gen_pol genera un polinomio de grado minimo usando el polinomio interpolador de Lagrange.
     tomando como argumento una lista de puntos de la forma (x, y)"""
-    
+
     def __init__(self, coeficientes={}):
         self.coeficientes = coeficientes
 
@@ -249,8 +249,6 @@ class Polinomio:
         pol = ""
         grado_minimo = min(self.coeficientes.keys())
         grado_maximo = max(self.coeficientes.keys())
-        print(grado_maximo)
-
 
         #Por ahora que los imprima solamente si estan ordenados, porque sino habria que cambiar
         #que se no se imprima el signo solamente si el es el coeficiente principal

@@ -17,3 +17,6 @@ pol2.random_pol(5, -10, 10)
 
 pol1.print_pol()
 pol2.print_pol()
+
+pol1.sumar(pol2)
+pol1.print_pol()
