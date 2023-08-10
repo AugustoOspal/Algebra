@@ -183,6 +183,51 @@ def signo(num):
         return "-"
 
 
+def make_trans(matrix):
+    # Dimensiones de la matriz
+    # Cantidad de filas = n
+    # Cantidad de columnas = m
+
+    n = len(matrix)
+    m = len(matrix[0])
+
+    total_switch = 0
+    switch_counter = 0
+    while True:
+        for i in range(n):
+            for j in range(m):
+                if matrix[i][j] == 1:
+                    for k in range(m):
+                        if matrix[j][k] == 1 and matrix[i][k] != 1:
+                            matrix[i][k] = 1
+                            switch_counter += 1
+        if switch_counter == 0:
+            break
+        else:
+            total_switch += switch_counter
+            switch_counter = 0
+
+    return matrix, total_switch
+
+def make_reflex(matrix):
+    """Suponiendo que es cuadrada y ordenarla. Mejorar"""
+    counter = 0
+    for i in range(len(matrix)):
+        if matrix[i][i] != 1:
+            matrix[i][i] = 1
+            counter += 1
+    return matrix, counter
+
+
+def make_sim(matrix):
+    counter = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1 and matrix[j][i] == 0:
+                matrix[j][i] = 1
+                counter += 1
+    return matrix, counter
+
 # def resto_chino(matriz):
 #     """La matriz nx3 siendo n el numero de ecuaciones"""
 
@@ -207,11 +252,10 @@ class Polinomio:
     El metodo gen_pol genera un polinomio de grado minimo usando el polinomio interpolador de Lagrange.
     tomando como argumento una lista de puntos de la forma (x, y)"""
 
-    def __init__(self, coeficientes={0:0}):
+    def __init__(self, coeficientes={0: 0}):
         self.coeficientes = coeficientes
 
     def get_pol(self, diccionario):
-
         if type(diccionario) != dict:
             raise TypeError("El argumento debe ser un diccionario")
 
@@ -221,7 +265,7 @@ class Polinomio:
 
             self.coeficientes[key] = diccionario[key]
 
-    def random_pol(self, grado, minimo, maximo):
+    def random_pol(self, grado=4, minimo=-10, maximo=10):
         """Genera un polinomio aleatorio de grado grado con coeficientes entre minimo y maximo"""
         self.clear_pol()
         for i in range(grado + 1):
@@ -242,9 +286,14 @@ class Polinomio:
     def isMonico(self):
         if len(self.coeficientes) == 1:
             return True
-        
+
     def grado(self):
-        return max(self.coeficientes.keys())
+        grados = list(self.coeficientes)
+        grados.sort(reverse=True)
+        print(grados)
+        for coeficiente in self.coeficientes.values():
+            if coeficiente != 0:
+                return grados.index(coeficiente)
 
     def print_pol(self):
         if self.coeficientes == {}:
@@ -252,8 +301,7 @@ class Polinomio:
             return
 
         pol = ""
-        grado_maximo = max(self.coeficientes.keys())
-        grado_minimo = min(self.coeficientes.keys())
+        grado_maximo = self.grado()
 
         # Por ahora que los imprima solamente si estan ordenados, porque sino habria que cambiar
         # que se no se imprima el signo solamente si el es el coeficiente principal
@@ -270,7 +318,7 @@ class Polinomio:
             elif key == grado_maximo and self.coeficientes[key] == -1:
                 pol += "-"
 
-            elif self.coeficientes[key] != 1 or key == grado_minimo:
+            elif self.coeficientes[key] != 1:
                 pol += signo(self.coeficientes[key]) + str(abs(self.coeficientes[key]))
 
             if key > 1:
@@ -278,6 +326,7 @@ class Polinomio:
             elif key == 1:
                 pol += "x"
 
+        print(grado_maximo)
         print(pol)
 
     def sumar(self, pol):
@@ -313,8 +362,12 @@ class Polinomio:
         for key in pol.coeficientes:
             for key2 in self.coeficientes:
                 if key + key2 in new_pol.coeficientes:
-                    new_pol.coeficientes[key + key2] += pol.coeficientes[key] * self.coeficientes[key2]
+                    new_pol.coeficientes[key + key2] += (
+                        pol.coeficientes[key] * self.coeficientes[key2]
+                    )
                 else:
-                    new_pol.coeficientes[key + key2] = pol.coeficientes[key] * self.coeficientes[key2]
+                    new_pol.coeficientes[key + key2] = (
+                        pol.coeficientes[key] * self.coeficientes[key2]
+                    )
 
         self.coeficientes = new_pol.coeficientes
