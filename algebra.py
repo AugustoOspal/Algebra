@@ -138,6 +138,12 @@ def get_mcd(numbers):
 
     return counter
 
+def mcd(num1, num2):
+    """MCD calculado con algoritmo de Euclides"""
+    if num2 == 0:
+        return num1
+    
+    return mcd(num2, num1 % num2)
 
 def get_sigma(number):
     """Finds the divisors and the multiplicity. Returns a diccionary"""

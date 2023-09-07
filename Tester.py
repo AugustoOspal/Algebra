@@ -37,11 +37,11 @@ from time import sleep
 # matriz = [[0, 1, 0, 0, 0], [0, 0, 1, 1, 0], [0, 0, 0, 1, 0], [0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
 
 #make a function that prints a matrix
-def print_matrix(matrix):
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            print(matrix[i][j], end = " ")
-        print()
+# def print_matrix(matrix):
+#     for i in range(len(matrix)):
+#         for j in range(len(matrix[0])):
+#             print(matrix[i][j], end = " ")
+#         print()
 
 # print_matrix(matriz)
 
@@ -59,3 +59,4 @@ def print_matrix(matrix):
 #         total_counter = 0
 # print_matrix(matriz)
 
+print(algebra.mcd(7, 7))
