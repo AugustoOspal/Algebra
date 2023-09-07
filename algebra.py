@@ -1,6 +1,21 @@
 import math
 import random
 
+def get_int(message):
+    negative = False
+    message = str(message)
+    num = input(message)
+    while True:
+        if num[0] == '-':
+            num = num[1::]
+            negative = True
+        if num.isnumeric():
+            num = float(num)
+            if num.is_integer():
+                if negative:
+                    num = -num
+                return int(num)
+        num = input(message)
 
 def factorial(num):
     if num == 1 or num == 0:
@@ -26,6 +41,9 @@ def check_prime(num):
 def valuacion(num, div):
     i = 0
 
+    if not check_prime(div):
+        return 
+
     if div == 1:
         return 1
 
@@ -40,7 +58,7 @@ def get_divisors(num, negativos=True, uno=True):
     # flag para negativos
     divisors = []
 
-    num = abs(num)
+    num = abs(int(num))
 
     i = 1
     while num != 1:
@@ -187,6 +205,12 @@ def signo(num):
         return "+"
     else:
         return "-"
+    
+def sg(num):
+    if num >= 0:
+        return 1
+    else:
+        return -1
 
 
 def make_trans(matrix):

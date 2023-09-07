@@ -1,5 +1,3 @@
-import algebra
-from time import sleep
 # # diccionario = {}
 # # while True:
 # #     num = int(input("Grado: "))
@@ -59,4 +57,21 @@ from time import sleep
 #         total_counter = 0
 # print_matrix(matriz)
 
-print(algebra.mcd(7, 7))
+def get_int(message):
+    negative = False
+    message = str(message)
+    num = input(message)
+    while True:
+        if num[0] == '-':
+            num = num[1::]
+            negative = True
+        if num.isdigit():
+            num = float(num)
+            if num.is_integer():
+                if negative:
+                    num = -num
+                return int(num)
+        num = input(message)
+
+numero = get_int("Ingrese numero: ")
+print(numero)
