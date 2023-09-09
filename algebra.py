@@ -258,7 +258,56 @@ def make_sim(matrix):
                 counter += 1
     return matrix, counter
 
-#def combinacion_lineal(num1, num2):
+
+#PONER LINDA ESTA FUNCION
+def combinacion_lineal(numero1, numero2):
+    """Devuelve la combinacion lineal de los numeros ingresados"""
+    restos = []
+    cocientes = []
+    lineas = []
+
+    flag = False
+    resto = 1
+
+    if numero2 > numero1:
+            numero1, numero2 = numero2, numero1
+            flag = True
+
+    while resto != 0:
+
+        linea = []
+
+        cocientes.append(math.floor(numero1 / numero2)) 
+        resto = numero1 % numero2
+        restos.append(resto)
+
+        linea.extend([numero1, numero2, cocientes[-1], resto])
+        lineas.append(linea)
+
+        numero1 = numero2
+        numero2 = resto
+
+    mcd = restos[-2]
+    #rd = resto despejado
+    rd = []
+    for linea in lineas[-2::-1]:
+        rd.append([linea[3], linea[0], -linea[2], linea[1]])
+
+    #simepre la cantidad de veces del resto al principio va a ser 1
+    rd[0][0] = 1
+
+    for i in range(len(rd) - 1):
+        rd[0][-1] = rd[1][1::]
+        rd[0][0] = rd[0][0] + rd[0][2] * rd[0][3][1]
+        rd[0][3] = rd[0][3][0]
+        rd[0][0], rd[0][2] = rd[0][2], rd[0][0]
+        rd[0][1], rd[0][3] = rd[0][3], rd[0][1]
+        del rd[1]
+
+    if flag:
+        return rd[0][2], rd[0][0]
+
+    return rd[0][0], rd[0][2]
 
 
 # def resto_chino(matriz):

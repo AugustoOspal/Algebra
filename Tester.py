@@ -1,3 +1,4 @@
+import algebra
 # # diccionario = {}
 # # while True:
 # #     num = int(input("Grado: "))
@@ -56,3 +57,5 @@
 #     else:
 #         total_counter = 0
 # print_matrix(matriz)
+
+print(algebra.combinacion_lineal(34, 126))

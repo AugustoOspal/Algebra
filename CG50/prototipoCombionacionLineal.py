@@ -43,10 +43,17 @@ resto_despejado[0][0] = 1
 
 for i in range(len(resto_despejado) - 1):
     resto_despejado[0][-1] = resto_despejado[1][1::]
+    
+    print(mcd, '=', resto_despejado[0][0], '*', resto_despejado[0][1], algebra.signo(resto_despejado[0][2]), abs(resto_despejado[0][2]), '*(', resto_despejado[0][3][0], algebra.signo(resto_despejado[0][3][1]), abs(resto_despejado[0][3][1]), '*', resto_despejado[0][3][2], ')', sep='')
+
     resto_despejado[0][0] = resto_despejado[0][0] + resto_despejado[0][2] * resto_despejado[0][3][1]
     resto_despejado[0][3] = resto_despejado[0][3][0]
     resto_despejado[0][0], resto_despejado[0][2] = resto_despejado[0][2], resto_despejado[0][0]
     resto_despejado[0][1], resto_despejado[0][3] = resto_despejado[0][3], resto_despejado[0][1]
+
+    """FALTA EL PRINT ESTEEEEEEEEEEEEEEEEEEEEE"""
+    print(mcd, '=', resto_despejado[0][0], '*', resto_despejado[0][1], algebra.signo(resto_despejado[0][2]), abs(resto_despejado[0][2]), '*', resto_despejado[0][3], sep='')
+
     del resto_despejado[1]
 
 #Imprimo la combinacion lineal
