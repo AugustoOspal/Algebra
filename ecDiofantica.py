@@ -25,7 +25,9 @@ while opcion != 1 and opcion != 2:
     opcion = algebra.get_int("Opcion: ")
 
 if opcion == 2:
-    x0, y0 = solucion_particular(a, b, c)
+    x0, y0 = algebra.combinacion_lineal(a, b)
+    x0, y0 = x0*c, y0*c
+    print(x0, y0)
 
 else:
     x0 = algebra.get_int("X_0: ")

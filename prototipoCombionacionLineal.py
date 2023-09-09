@@ -6,17 +6,17 @@ cocientes = []
 
 lineas = []
 
-numero1 = algebra.get_int("Numero 1: ")
-numero2 = algebra.get_int("Numero 2: ")
+numero1 = abs(algebra.get_int("Numero 1: "))
+numero2 = abs(algebra.get_int("Numero 2: "))
 
 resto = 1
+
+if numero2 > numero1:
+        numero1, numero2 = numero2, numero1
 
 while resto != 0:
 
     linea = []
-
-    if numero2 > numero1:
-        numero1, numero2 = numero2, numero1
 
     cocientes.append(math.floor(numero1 / numero2)) 
     resto = numero1 % numero2
