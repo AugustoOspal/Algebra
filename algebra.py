@@ -201,7 +201,7 @@ def ask_matriz_chino():
 
 
 def signo(num):
-    if num > 0:
+    if num >= 0:
         return "+"
     else:
         return "-"
@@ -257,6 +257,9 @@ def make_sim(matrix):
                 matrix[j][i] = 1
                 counter += 1
     return matrix, counter
+
+#def combinacion_lineal(num1, num2):
+
 
 # def resto_chino(matriz):
 #     """La matriz nx3 siendo n el numero de ecuaciones"""
