@@ -11,6 +11,8 @@ numero2 = algebra.get_int("Numero 2: ")
 
 resto = 1
 
+print()
+
 while resto != 0:
 
     linea = []
@@ -25,7 +27,7 @@ while resto != 0:
     linea.extend([numero1, numero2, cocientes[-1], resto])
     lineas.append(linea)
 
-    print(f"{numero1} = {numero2} * {cocientes[-1]} {algebra.signo(resto)} {abs(resto)}")
+    print(numero1, '+', numero2, '*',cocientes[-1], algebra.signo(resto), abs(resto), sep='')
 
     numero1 = numero2
     numero2 = resto
@@ -49,7 +51,7 @@ for i in range(len(resto_despejado) - 1):
 
 #Imprimo la combinacion lineal
 if resto_despejado[0][2] < 0:
-    print(f"{mcd} = {resto_despejado[0][0]} * {resto_despejado[0][1]} - {-resto_despejado[0][2]} * {resto_despejado[0][3]}")
+    print("\n", mcd, '=', resto_despejado[0][0], '*', resto_despejado[0][1], '-', -resto_despejado[0][2], '*', resto_despejado[0][3], sep='')
 
 else:
-    print(f"\n{mcd} = {resto_despejado[0][2]} * {resto_despejado[0][3]} - {-resto_despejado[0][0]} * {resto_despejado[0][1]}")
+    print("\n", mcd, '=', resto_despejado[0][2], '*', resto_despejado[0][3], '-', -resto_despejado[0][0], '*', resto_despejado[0][1], sep='')
