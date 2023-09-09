@@ -32,36 +32,11 @@ while resto != 0:
 
 mcd = restos[-2]
 
-# print("")
-
-# print(f"{mcd} = ")
-
-print(f"Cocientes: {cocientes}")
-print(f"Restos: {restos}")
-
-print(f"\n\n{lineas}")
-
 resto_despejado = []
 for linea in lineas[-2::-1]:
     resto_despejado.append([linea[3], linea[0], -linea[2], linea[1]])
 
-for elemento in resto_despejado:
-    print(elemento)
-
-# for elemento in resto_despejado:
-#     print(f"{elemento[0]} = {elemento[1]} + {elemento[2]} * {elemento[3]}")
-
-print(resto_despejado)
-
-# for i in range(len(resto_despejado) - 1):
-#     resto_despejado[-i -2][-1] = resto_despejado[-i - 1][1::]
-# print(resto_despejado[0])
-
-
-# resto_despejado[0][0] = 1
-# for i in range(len(resto_despejado) - 1):
-#     resto_despejado[i][-1] = resto_despejado[i + 1][1::]
-
+#simepre la cantidad de veces del resto al principio va a ser 1
 resto_despejado[0][0] = 1
 
 for i in range(len(resto_despejado) - 1):
@@ -72,5 +47,12 @@ for i in range(len(resto_despejado) - 1):
     resto_despejado[0][1], resto_despejado[0][3] = resto_despejado[0][3], resto_despejado[0][1]
     del resto_despejado[1]
 
-
 print(resto_despejado[0])
+
+
+#Imprimo la combinacion lineal
+if resto_despejado[0][2] < 0:
+    print(f"{mcd} = {resto_despejado[0][0]} * {resto_despejado[0][1]} - {-resto_despejado[0][2]} * {resto_despejado[0][3]}")
+
+else:
+    print(f"{mcd} = {resto_despejado[0][2]} * {resto_despejado[0][3]} - {-resto_despejado[0][0]} * {resto_despejado[0][1]}")
