@@ -27,7 +27,7 @@ while resto != 0:
     linea.extend([numero1, numero2, cocientes[-1], resto])
     lineas.append(linea)
 
-    print(numero1, '+', numero2, '*',cocientes[-1], algebra.signo(resto), abs(resto), sep='')
+    print(numero1, '=', numero2, '*',cocientes[-1], algebra.signo(resto), abs(resto), sep='')
 
     numero1 = numero2
     numero2 = resto
