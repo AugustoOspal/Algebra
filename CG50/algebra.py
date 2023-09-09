@@ -9,12 +9,11 @@ def get_int(message):
         if num[0] == '-':
             num = num[1::]
             negative = True
-        if num.isnumeric():
+        if num.isdigit():
             num = float(num)
-            if num.is_integer():
-                if negative:
-                    num = -num
-                return int(num)
+            if negative:
+                num = -num
+            return int(num)
         num = input(message)
 
 def factorial(num):
