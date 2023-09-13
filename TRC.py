@@ -14,44 +14,73 @@ def check_mods(mods):
                     return 2
     return 0
 
+def sort_moudulo(ecuaciones):
+    """Ordena la matriz de ecuaciones por orden de modulo"""
+    counter = 0
+    modulos = []
+    for ecuacion in ecuaciones:
+        modulos.append(ecuacion[1])
+    modulos.sort(reverse=True)
+    
+
+    # Esto se puede mejorar eliminando la fila en ecuaciones cada vez que
+    # la ubico en ecuaciones_sorted
+    ecuaciones_sorted = []
+    for i in range(len(ecuaciones)):
+        for j in range(len(ecuaciones)):
+            if ecuaciones[j][1] == modulos[i]:
+                ecuaciones_sorted.append(ecuaciones[j])
+                
+    return ecuaciones_sorted
+
 def solve_chino(ecuaciones):
     """Resuleve un sistema de ecuaciones de congruencia por el metodo dek resto chino
     de la forma x = a(mod b)"""
+
     modulos = []
     for i in range(len(ecuaciones)):
         modulos.append(ecuaciones[i][1])
 
-    if check_mods(modulos) != 0:
-        print("Los modulos no son coprimos")
+    estado_modulos = check_mods(modulos)
+    if estado_modulos == 1:
+        print("Dos modulos iguales")
         exit()
 
+    elif estado_modulos == 2:
+        print("Dos modulos no coprimos")
+        exit()
+
+    ecuaciones = sort_moudulo(ecuaciones)
+
+    # Modulo de la solucion
     M = 1
     for i in range(len(modulos)):
         M *= modulos[i]
 
+    # Esto todavia se puede mejorar un monton
     x_i = []
-
     for i in range(len(ecuaciones)):
         x = []
-        for j in range(M // modulos[i]):
-            x.append(j * modulos[i] + ecuaciones[i][0])
-        x_i.append(x)
-        print("x = " + str(ecuaciones[i][0]) + "(mod " + str(ecuaciones[i][1]) + ")" + " = " + str(x))
+        for j in range(M // ecuaciones[i][1]):
+            n = ecuaciones[i][1] * j + ecuaciones[i][0]
+            if i == 0:
+                x_i.append(n)
+            elif n in x_i:
+                x.append(n)
+        if i != 0:
+            x_i = list(set(x_i) & set(x))
 
-    interseccion = x_i[0]
-    for i in range(1, len(x_i)):
-        interseccion = list(set(x_i[i]) & set(interseccion))
-        
-    return interseccion[0], M
+    return x_i[0], M
 
 
-
-modulos = []
+# Main
 ecuaciones = []
-numero_ecuaciones = algebra.get_int("Numero de ec: ")
 
+# Ingreso de datos
+numero_ecuaciones = algebra.get_int("Numero de ec: ")
 print("\nx = a(mod b)\n")
 
+# Almaceno los datos en una matriz
 for i in range(numero_ecuaciones):
     ecuacion = []
     ecuacion.append(algebra.get_int("a: "))
@@ -60,16 +89,6 @@ for i in range(numero_ecuaciones):
     print()
 
     ecuaciones.append(ecuacion)
-    modulos.append(ecuacion[1])
 
-estado_coprimos = check_mods(modulos)
-
-if estado_coprimos:
-    print("Hay dos modulos que sin iguales")
-    exit()
-elif estado_coprimos == 2:
-    print("Hay dos modulos que no son coprimos")
-    exit()
-else:
-    solucion, modulo = solve_chino(ecuaciones)
-    print("\nx = " + str(solucion) + "(mod " + str(modulo) + ")")
+solucion, modulo = solve_chino(ecuaciones)
+print("\nx = " + str(solucion) + "(mod " + str(modulo) + ")")

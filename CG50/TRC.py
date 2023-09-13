@@ -21,16 +21,21 @@ def solve_chino(ecuaciones):
     for i in range(len(ecuaciones)):
         modulos.append(ecuaciones[i][1])
 
-    if check_mods(modulos) != 0:
-        print("Los modulos no son coprimos")
+    estado_modulos = check_mods(modulos)
+    if estado_modulos == 1:
+        print("Dos modulos iguales")
         exit()
 
+    elif estado_modulos == 2:
+        print("Dos modulos no coprimos")
+        exit()
+
+    # Modulo de la solucion
     M = 1
     for i in range(len(modulos)):
         M *= modulos[i]
 
     x_i = []
-
     for i in range(len(ecuaciones)):
         x = []
         for j in range(M // modulos[i]):
