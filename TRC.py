@@ -78,6 +78,10 @@ ecuaciones = []
 
 # Ingreso de datos
 numero_ecuaciones = algebra.get_int("Numero de ec: ")
+
+if numero_ecuaciones == 0:
+    exit()
+
 print("\nx = a(mod b)\n")
 
 # Almaceno los datos en una matriz
