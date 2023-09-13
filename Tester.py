@@ -58,4 +58,4 @@ import algebra
 #         total_counter = 0
 # print_matrix(matriz)
 
-print(algebra.combinacion_lineal(34, 126))
+print(algebra.combinacion_lineal(7, -18))

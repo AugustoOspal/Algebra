@@ -200,7 +200,7 @@ def ask_matriz_chino():
 
 
 def signo(num):
-    if num > 0:
+    if num >= 0:
         return "+"
     else:
         return "-"

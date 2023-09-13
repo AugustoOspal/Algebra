@@ -4,3 +4,5 @@ Cambiar la estructura para que admita dos terminos de igual grado (chequear si e
 Crear un metodo que sume los terminos de igual grado de un mismo polinomio
 Crear un metodo para dividir
 Crear un metodo para crear un polinomio de Lagrange
+
+FALTA ARRGLAR EC DIOFANTICA
