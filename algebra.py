@@ -344,8 +344,12 @@ class Polinomio:
         for key in diccionario:
             if type(key) != int:
                 raise TypeError("Las claves del diccionario deben ser enteros")
+            
+        for i in range(max(diccionario.keys())):
+            if i not in diccionario.keys():
+                diccionario[i] = 0
 
-            self.coeficientes[key] = diccionario[key]
+        self.coeficientes = diccionario
 
     def random_pol(self, grado=4, minimo=-10, maximo=10):
         """Genera un polinomio aleatorio de grado grado con coeficientes entre minimo y maximo"""
@@ -453,3 +457,5 @@ class Polinomio:
                     )
 
         self.coeficientes = new_pol.coeficientes
+
+print("Probando")
