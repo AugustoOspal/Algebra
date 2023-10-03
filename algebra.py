@@ -457,5 +457,3 @@ class Polinomio:
                     )
 
         self.coeficientes = new_pol.coeficientes
-
-print("Probando")
