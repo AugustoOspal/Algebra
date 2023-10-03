@@ -344,10 +344,6 @@ class Polinomio:
         for key in diccionario:
             if type(key) != int:
                 raise TypeError("Las claves del diccionario deben ser enteros")
-            
-        for i in range(max(diccionario.keys())):
-            if i not in diccionario.keys():
-                diccionario[i] = 0
 
         self.coeficientes = diccionario
 
@@ -358,6 +354,7 @@ class Polinomio:
             self.coeficientes[i] = random.randint(minimo, maximo)
 
     def clear_pol(self):
+        """Borra todos los coeficientes convirtiendolo en el polinomio nulo"""
         self.coeficientes = {}
 
     def add_term(self, grado, coeficiente):
@@ -370,49 +367,63 @@ class Polinomio:
             self.coeficientes = dict(sorted(self.coeficientes.items()))
 
     def isMonico(self):
-        if len(self.coeficientes) == 1:
+        if self.coeficientes[self.grado()] == 1:
             return True
+        else:
+            return False
 
     def grado(self):
-        grados = list(self.coeficientes)
-        grados.sort(reverse=True)
-        print(grados)
-        for coeficiente in self.coeficientes.values():
-            if coeficiente != 0:
-                return grados.index(coeficiente)
+        max = 0
+        for grado in self.coeficientes.keys():
+            if grado > max:
+                max = grado
+        return grado
+        
+    def print_term(self, grado, End="\n"):
+        """Imprime el coeficiente del grado correspondiente
+        Tambien devuelve el valor del coeficiente"""
+        if grado not in self.coeficientes.keys():
+            if grado == 0:
+                print("0", end=End)
+            else:
+                print("0x^" + str(grado), end=End)
+            return 0
+        
+        coeficiente = self.coeficientes[grado]
 
+        if coeficiente == 1:
+            print("x^" + str(grado), end=End)
+        elif coeficiente == -1:
+            print("-x^" + str(grado), end=End)
+        else:
+            print(str(coeficiente) + "x^" + str(grado), end=End)
+
+        return coeficiente
+    
     def print_pol(self):
-        if self.coeficientes == {}:
-            print("0")
-            return
-
         pol = ""
-        grado_maximo = self.grado()
+        for grado in self.coeficientes.keys():
+            coeficiente = self.coeficientes[grado]
 
-        # Por ahora que los imprima solamente si estan ordenados, porque sino habria que cambiar
-        # que se no se imprima el signo solamente si el es el coeficiente principal
-        self.sort_pol()
+            if grado != self.coeficientes.keys()[0]:
+                if coeficiente >= 0:
+                    pol += "+"
 
-        # No me gusta mucho como quedo esto, ver si se puede mejorar
-        for key in self.coeficientes:
-            if self.coeficientes[key] == 0:
+            if grado == 0:
+                pol += str(coeficiente)
                 continue
 
-            elif key == grado_maximo and abs(self.coeficientes[key]) != 1:
-                pol += str(self.coeficientes[key])
+            if coeficiente > 0:
+                if coeficiente == 1:
+                    pol += "x^" + str(grado)
+                else:
+                    pol += str(coeficiente) + "x^" + str(grado)
 
-            elif key == grado_maximo and self.coeficientes[key] == -1:
-                pol += "-"
-
-            elif self.coeficientes[key] != 1:
-                pol += signo(self.coeficientes[key]) + str(abs(self.coeficientes[key]))
-
-            if key > 1:
-                pol += f"x^{str(key)}"
-            elif key == 1:
-                pol += "x"
-
-        print(grado_maximo)
+            else:
+                if coeficiente == -1:
+                    pol += "-x^" + str(grado)
+                else:
+                    pol += str(coeficiente) + "x^" + str(grado)
         print(pol)
 
     def sumar(self, pol):

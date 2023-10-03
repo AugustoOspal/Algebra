@@ -58,4 +58,10 @@ import algebra
 #         total_counter = 0
 # print_matrix(matriz)
 
-print(algebra.combinacion_lineal(7, -18))
+# print(algebra.combinacion_lineal(7, -18))
+
+p1 = algebra.Polinomio()
+p1.random_pol()
+p1.sort_pol()
+p1.print_pol()
+print(p1.grado())
