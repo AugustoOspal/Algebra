@@ -63,5 +63,4 @@ import algebra
 p1 = algebra.Polinomio()
 p1.random_pol()
 p1.sort_pol()
-p1.print_pol()
 print(p1.grado())

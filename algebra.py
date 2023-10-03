@@ -377,7 +377,7 @@ class Polinomio:
         for grado in self.coeficientes.keys():
             if grado > max:
                 max = grado
-        return grado
+        return max
         
     def print_term(self, grado, End="\n"):
         """Imprime el coeficiente del grado correspondiente
