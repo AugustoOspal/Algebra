@@ -336,6 +336,7 @@ class Polinomio:
 
     def __init__(self, coeficientes={0: 0}):
         self.coeficientes = coeficientes
+        self.clear_pol()
 
     def get_pol(self, diccionario):
         if type(diccionario) != dict:
@@ -352,12 +353,13 @@ class Polinomio:
         self.clear_pol()
         for i in range(grado + 1):
             self.coeficientes[i] = random.randint(minimo, maximo)
+        self.sort_pol()
 
     def clear_pol(self):
         """Borra todos los coeficientes convirtiendolo en el polinomio nulo"""
         self.coeficientes = {}
 
-    def add_term(self, grado, coeficiente):
+    def insert_term(self, grado, coeficiente):
         self.coeficientes[grado] = coeficiente
 
     def sort_pol(self, reverse=True):
@@ -379,92 +381,65 @@ class Polinomio:
                 max = grado
         return max
         
-    def print_term(self, grado, End="\n"):
-        """Imprime el coeficiente del grado correspondiente
-        Tambien devuelve el valor del coeficiente"""
-        if grado not in self.coeficientes.keys():
-            if grado == 0:
-                print("0", end=End)
-            else:
-                print("0x^" + str(grado), end=End)
-            return 0
-        
-        coeficiente = self.coeficientes[grado]
-
-        if coeficiente == 1:
-            print("x^" + str(grado), end=End)
-        elif coeficiente == -1:
-            print("-x^" + str(grado), end=End)
-        else:
-            print(str(coeficiente) + "x^" + str(grado), end=End)
-
-        return coeficiente
-    
     def print_pol(self):
         pol = ""
         for grado in self.coeficientes.keys():
             coeficiente = self.coeficientes[grado]
 
-            if grado != self.coeficientes.keys()[0]:
-                if coeficiente >= 0:
-                    pol += "+"
-
             if grado == 0:
-                pol += str(coeficiente)
+                pol += signo(coeficiente) + str(abs(coeficiente))
                 continue
 
             if coeficiente > 0:
                 if coeficiente == 1:
-                    pol += "x^" + str(grado)
+                    pol += "+x^" + str(grado)
                 else:
-                    pol += str(coeficiente) + "x^" + str(grado)
+                    pol += "+" + str(coeficiente) + "x^" + str(grado)
 
             else:
                 if coeficiente == -1:
                     pol += "-x^" + str(grado)
                 else:
                     pol += str(coeficiente) + "x^" + str(grado)
+        
+        if pol[0] == "+":
+            pol = pol[1::]
         print(pol)
+       
 
-    def sumar(self, pol):
-        if type(pol) != Polinomio:
-            raise TypeError("El argumento debe ser un polinomio")
+def sumar_pols(pol1 ,pol2):
+    if type(pol1) != Polinomio or type(pol2) != Polinomio:
+        raise TypeError("El argumento debe ser un polinomio")
+    
+    pol = Polinomio()
 
-        for key in pol.coeficientes:
-            if key in self.coeficientes:
-                self.coeficientes[key] += pol.coeficientes[key]
-            else:
-                self.coeficientes[key] = pol.coeficientes[key]
+    for grado in pol1.coeficientes.keys():
+        if grado not in pol.coeficientes.keys():
+            pol.coeficientes[grado] = pol1.coeficientes[grado]
+        else:
+            pol.coeficientes[grado] += pol1.coeficientes[grado]
+    
+    for grado in pol2.coeficientes.keys():
+        if grado not in pol.coeficientes.keys():
+            pol.coeficientes[grado] = pol2.coeficientes[grado]
+        else:
+            pol.coeficientes[grado] += pol2.coeficientes[grado]
+    
+    pol.sort_pol()
+    return pol
 
-    def restar(self, pol):
-        if type(pol) != Polinomio:
-            raise TypeError("El argumento debe ser un polinomio")
+def multiplicar_pols(pol1, pol2):
+    if type(pol1) != Polinomio or type(pol2) != Polinomio:
+        raise TypeError("El argumento debe ser un polinomio")
+    
+    pol = Polinomio()
 
-        for key in pol.coeficientes:
-            if key in self.coeficientes:
-                self.coeficientes[key] -= pol.coeficientes[key]
-            else:
-                self.coeficientes[key] = -pol.coeficientes[key]
+    for i in pol1.coeficientes.keys():
+        for j in pol2.coeficientes.keys():
+            k = Polinomio()
+            # k.clear_pol()
+            k.insert_term(i + j, pol1.coeficientes[i] * pol2.coeficientes[j])
+            pol = sumar_pols(pol, k)
 
-    def multiplicar(self, pol):
-        if type(pol) != Polinomio and not str(pol).isnumeric():
-            raise TypeError("El argumento debe ser un polinomio")
-
-        new_pol = Polinomio()
-        new_pol.clear_pol()
-
-        if type(pol) != Polinomio:
-            pol = Polinomio({0: pol})
-
-        for key in pol.coeficientes:
-            for key2 in self.coeficientes:
-                if key + key2 in new_pol.coeficientes:
-                    new_pol.coeficientes[key + key2] += (
-                        pol.coeficientes[key] * self.coeficientes[key2]
-                    )
-                else:
-                    new_pol.coeficientes[key + key2] = (
-                        pol.coeficientes[key] * self.coeficientes[key2]
-                    )
-
-        self.coeficientes = new_pol.coeficientes
+    pol.sort_pol()
+    return pol

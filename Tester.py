@@ -61,6 +61,24 @@ import algebra
 # print(algebra.combinacion_lineal(7, -18))
 
 p1 = algebra.Polinomio()
+p2 = algebra.Polinomio()
+p3 = algebra.Polinomio()
+p4 = algebra.Polinomio()
+
 p1.random_pol()
-p1.sort_pol()
-print(p1.grado())
+p2.random_pol()
+
+p1.print_pol()
+p2.print_pol()
+
+p3 = algebra.sumar_pols(p1, p2)
+p3.print_pol()
+
+p4 = algebra.multiplicar_pols(p1, p2)
+p4.print_pol()
+
+p5 = algebra.Polinomio()
+p5.get_pol({0:-1})
+
+p4 = algebra.multiplicar_pols(p5, p1)
+p4.print_pol()
