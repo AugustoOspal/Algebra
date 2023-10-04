@@ -396,7 +396,7 @@ class Polinomio:
                 else:
                     pol += "+" + str(coeficiente) + "x^" + str(grado)
 
-            else:
+            elif coeficiente < 0:
                 if coeficiente == -1:
                     pol += "-x^" + str(grado)
                 else:
@@ -404,8 +404,7 @@ class Polinomio:
         
         if pol[0] == "+":
             pol = pol[1::]
-        print(pol)
-       
+        print(pol) 
 
 def sumar_pols(pol1 ,pol2):
     if type(pol1) != Polinomio or type(pol2) != Polinomio:
@@ -437,9 +436,18 @@ def multiplicar_pols(pol1, pol2):
     for i in pol1.coeficientes.keys():
         for j in pol2.coeficientes.keys():
             k = Polinomio()
-            # k.clear_pol()
             k.insert_term(i + j, pol1.coeficientes[i] * pol2.coeficientes[j])
             pol = sumar_pols(pol, k)
+
+    pol.sort_pol()
+    return pol
+
+def restar_pols(pol1, pol2):
+    """Pol1 - Pol2"""
+    pol = Polinomio()
+    pol.insert_term(0, -1)
+    pol2 = multiplicar_pols(pol2, pol)
+    pol = sumar_pols(pol1, pol2)
 
     pol.sort_pol()
     return pol

@@ -72,13 +72,13 @@ p1.print_pol()
 p2.print_pol()
 
 p3 = algebra.sumar_pols(p1, p2)
+print("\nSuma")
 p3.print_pol()
 
 p4 = algebra.multiplicar_pols(p1, p2)
+print("\nMultiplicar")
 p4.print_pol()
 
-p5 = algebra.Polinomio()
-p5.get_pol({0:-1})
-
-p4 = algebra.multiplicar_pols(p5, p1)
+p4 = algebra.restar_pols(p1, p2)
+print("\nRestar")
 p4.print_pol()
